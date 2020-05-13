@@ -6,7 +6,6 @@ import kotlinx.html.dom.create
 import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import org.w3c.dom.HTMLDivElement
-import sample.State.Companion.toState
 import kotlin.browser.document
 import kotlin.dom.clear
 
@@ -84,7 +83,7 @@ fun box(size: LinearDimension, color: Color, col: Int, row: Int, sendAction: (St
         }
 
         onClickFunction = {
-            sendAction(Header.GAME with "$row$col")
+            sendAction(Header.GAME with Action(row-1+(col-1)*3).toJson())
         }
     }
     return res

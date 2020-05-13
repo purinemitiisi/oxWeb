@@ -20,6 +20,7 @@ import kotlinx.css.CSSBuilder
 import kotlinx.html.CommonAttributeGroupFacade
 import kotlinx.html.style
 import kotlin.browser.document
+import kotlin.browser.window
 
 actual class Sample {
     actual fun checkMe() = 12
@@ -50,13 +51,21 @@ suspend fun main() {
         }
     }
     client.cookies("/")
+
     val ws =
         GlobalScope.async {
+//            client.webSocketSession(
+//                HttpMethod.Get,
+////                "127.0.0.1",
+//                "192.168.11.5",
+//                8080,
+//                "/myws/echo"
+//            )
             client.webSocketSession(
                 HttpMethod.Get,
 //                "127.0.0.1",
-                "192.168.11.5",
-                8080,
+                window.location.hostname,
+                window.location.port.toInt(),
                 "/myws/echo"
             )
         }

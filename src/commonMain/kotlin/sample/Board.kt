@@ -1,40 +1,5 @@
 package sample
 
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
-
-@Serializable
-data class State(
-    val turnPlayer: Int = 0,
-    val board: CharArray = CharArray(9) { '.' }
-) {
-    companion object {
-        val json = Json(JsonConfiguration.Stable)
-        fun String.toState() = json.parse(serializer(), this)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null || this::class != other::class) return false
-
-        other as State
-
-        if (turnPlayer != other.turnPlayer) return false
-        if (!board.contentEquals(other.board)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = turnPlayer
-        result = 31 * result + board.contentHashCode()
-        return result
-    }
-
-    fun toJson():String = json.stringify(serializer(),this)
-}
-
 class Game {
     val players = listOf(0, 1)
     val turnPlayer = 0
@@ -59,6 +24,10 @@ class Game {
 
     fun put(x: Int, y: Int, c: Char) {
         board[3 * y + x] = c
+    }
+
+    fun put(action: Action, c:Char) {
+        board[action.cellID] = c
     }
 
     fun winPlayer(): Int? {

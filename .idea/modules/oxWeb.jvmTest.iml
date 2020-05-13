@@ -6,8 +6,8 @@
         <dependsOnModuleNames>oxWeb:commonTest</dependsOnModuleNames>
         <sourceSets>
           <sourceSet>oxWeb.commonTest</sourceSet>
-          <sourceSet>oxWeb.jvmMain</sourceSet>
           <sourceSet>oxWeb.commonMain</sourceSet>
+          <sourceSet>oxWeb.jvmMain</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
         <externalSystemTestTasks>jvmTest|oxWeb:jvmTest|jvm</externalSystemTestTasks>

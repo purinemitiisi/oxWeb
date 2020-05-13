@@ -92,3 +92,7 @@ task run(type: JavaExec, dependsOn: [jvmJar]) {
     classpath(configurations.jvmRuntimeClasspath, jvmJar)
     args = []
 }
+
+//task stage {
+//    dependsOn installDist
+//}

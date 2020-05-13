@@ -120,19 +120,21 @@ fun Application.module(testing: Boolean = false) {
             clients += client
             try {
                 send(Frame.Text(Header.CHAT with "Hi from server"))
+                send(Frame.Text(Header.GAME with game.getState().toJson()))
                 while (true) {
                     val frame = incoming.receive()
                     if (frame is Frame.Text) {
                         val text = frame.readText().alsoPrintln()
                         val head = text[0]
                         val body = text.drop(1)
+
                         for (cl in clients) {
                             val ws = cl.session
                             if (head == 'c')
-                                ws.send(Frame.Text("cClient ${client.id}: $body"))
+                                ws.send(Frame.Text(Header.CHAT with "Client ${client.id}: $body"))
                             else {
-                                val (col, row) = body.map { it - '0' - 1 }.alsoPrintln()
-                                game.board[col + row * 3] = if (client.id % 2 == 0)'o' else 'x'
+                                val act = body.toAction().alsoPrintln()
+                                game.put(act, if (client.id % 2 == 0)'o' else 'x')
                                 ws.send(Frame.Text(Header.GAME with game.getState().toJson()))
                             }
                         }
